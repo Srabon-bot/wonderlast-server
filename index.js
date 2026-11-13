@@ -27,6 +27,18 @@ const db = dbClient.db("wonderlust");
 const destinationsCollection = db.collection("destinations");
 const bookingsCollection = db.collection("bookings");
 
+const verifyApi = (req,res, next)=>{
+  const authHeader = req.headers.authorization;
+  console.log("Authorization Header:", authHeader);
+
+  if (!authHeader !== "user logged in") {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+  console.log("i am");
+  next();
+
+}
+
 function slugify(value) {
   return String(value ?? "")
     .normalize("NFKD")
